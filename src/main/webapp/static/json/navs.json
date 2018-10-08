@@ -1,0 +1,62 @@
+
+{
+	"contentManagement": [
+		{
+			"title": "订单信息",
+			"icon": "&#xe657;",
+			"href": "",
+			"spread": false,
+			"children": [
+			{
+			"title": "全部订单",
+			"href": "page/news/newsList.jsp",
+			"spread": false
+		},
+		{
+			"title": "已收货",
+			"href": "page/news/newsList3.jsp",
+			"spread": false
+		}
+			]
+		},
+		{
+			"title": "用户中心",
+			"icon": "&#xe770;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+			"title": "管理员",
+			"href": "page/user/userList2.jsp",
+			"spread": false
+		},
+		{
+			"title": "用户信息",
+			"href": "page/user/userList.jsp",
+			"spread": false
+		}
+			]
+		},
+			{
+			"title": "商品信息",
+			"icon": "&#xe630;",
+			"href": "",
+			"spread": false,
+			"children": [	{
+			"title": "新增商品",
+			"href": "page/order/ItemAdd.jsp",
+			"spread": false
+		},{
+			"title": "商品管理",
+			"href": "page/order/logs2.jsp",
+			"spread": false
+		},{
+			"title": "分类管理",
+			"href": "page/order/linkList.jsp",
+			"spread": false
+		}	]
+		}
+	]
+}
+
+

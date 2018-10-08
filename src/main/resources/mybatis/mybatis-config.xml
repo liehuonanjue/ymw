@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTDConfig 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--设置实体别名-->
+    <typeAliases>
+        <package name="com.entity"/>
+    </typeAliases>
+    <!--关联小配置映射文件-->
+    <mappers>
+        <package name="com.dao"/>
+    </mappers>
+</configuration>

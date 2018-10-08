@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.IIndentMapper">
+
+    <resultMap id="EasybuyOrderDetail" type="Easybuy_order_detail">
+        <id column="id" property="id"/>
+        <result column="orderid" property="orderid"/>
+        <result column="productid" property="productid"/>
+        <result column="quantiy" property="quantiy"/>
+        <result column="cost" property="cost"/>
+        <result column="productName" property="productName"/>
+        <result column="filename" property="filename"/>
+        <result column="name" property="name"/>
+
+    </resultMap>
+    <resultMap id="EasybuyOrder" type="Easybuy_order">
+        <id column="id" property="id"/>
+        <result column="userid" property="userid"/>
+        <result column="loginname" property="loginname"/>
+        <result column="useraddress" property="useraddress"/>
+        <result column="createtime" property="createtime"/>
+        <result column="cost" property="cost"/>
+        <result column="status" property="status"/>
+        <result column="type" property="type"/>
+        <result column="seriainumber" property="seriainumber"/>
+    </resultMap>
+
+
+    <select id="byidpage" resultMap="EasybuyOrderDetail">
+      SELECT pro.name,pro.fileName,det.quantiy,det.cost FROM easybuy_order_detail AS det,easybuy_product AS pro WHERE orderId=#{uid}  AND productId=pro.id
+    </select>
+
+
+    <select id="getOnePage" resultMap="EasybuyOrder">
+        SELECT id,userid,loginname,useraddress,createtime,cost,status,type,seriainumber FROM Easybuy_order
+        <where>
+            <if test="null==seleuname">
+                status != 5
+            </if>
+            <if test="null!=seleuname">
+                status != 5 and seriaINumber LIKE concat('%',#{seleuname},'%')
+            </if>
+        </where>
+    </select>
+
+    <!--完成的订单-->
+    <select id="getTwoPage" resultMap="EasybuyOrder">
+        SELECT id,userid,loginname,useraddress,createtime,cost,status,type,seriainumber FROM Easybuy_order
+        <where>
+            <if test="null==seleuname">
+                status = 5 limit LIMIT #{pageIndex},#{pageSize}
+            </if>
+            <if test="null!=seleuname">
+                status = 5 and seriaINumber LIKE concat('%',#{seleuname},'%') LIMIT #{pageIndex},#{pageSize}
+            </if>
+        </where>
+    </select>
+
+    <!--订单用户信息-->
+    <select id="orderdetali" resultType="Easybuy_order">
+SELECT * FROM easybuy_order WHERE  id = #{xxxx}
+    </select>
+
+    <!--订单用户信息-->
+    <select id="getTotalusers" resultType="int">
+        select count(1) from Easybuy_order
+        <where>
+            <choose>
+                <when test="ord==5">
+                    <if test="null==seleuname">
+                        status = 5
+                    </if>
+                    <if test="null!=seleuname">
+                        status = 5 and seriaINumber LIKE concat('%',#{seleuname},'%')
+                    </if>
+                </when>
+                <otherwise>
+                    <if test="null==seleuname">
+                        status != 5
+                    </if>
+                    <if test="null!=seleuname">
+                        status != 5 and seriaINumber LIKE concat('%',#{seleuname},'%')
+                    </if>
+                </otherwise>
+            </choose>
+
+        </where>
+    </select>
+
+    <update id="up_Order" parameterType="Easybuy_order">
+        UPDATE easybuy_order
+        <set>
+            status =#{status}
+            <where>id = #{id}</where>
+        </set>
+    </update>
+</mapper>

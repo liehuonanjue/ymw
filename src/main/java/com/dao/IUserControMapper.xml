@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.IUserControMapper">
+
+
+    <select id="addEasybuyInfo"></select>
+
+    <!--修改密码-->
+    <update id="up_userpwd" parameterType="Easybuy_info">
+        UPDATE easybuy_info
+        <set>
+            pwd =#{pwd}
+            <where>
+                name = #{name}
+            </where>
+
+        </set>
+    </update>
+
+    <!--分页查询前台用户-->
+    <select id="getOnePage" resultType="Easybuy_user">
+        SELECT * FROM easybuy_user
+        <where>
+            <choose>
+                <when test="null==seleuname and 2 == seleType">
+                    LIMIT #{pageIndex},#{pageSize}
+                </when>
+                <when test="null!=seleuname and 2 == seleType">
+                    userName LIKE concat('%',#{seleuname},'%') LIMIT #{pageIndex},#{pageSize}
+                </when>
+                <otherwise>
+                    type=#{seleType} AND userName LIKE concat('%',#{seleuname},'%') LIMIT #{pageIndex},#{pageSize}
+                </otherwise>
+            </choose>
+
+        </where>
+    </select>
+
+    <!--查询管理员信息-->
+    <select id="findAll" resultType="Easybuy_info">
+        SELECT * FROM easybuy_info
+        <if test="null!=seleuname">
+            <where>name LIKE concat('%',#{seleuname},'%')</where>
+        </if>
+    </select>
+    <!--修改-->
+    <update id="up_user" parameterType="Easybuy_user">
+        UPDATE easybuy_user
+        <set>
+            type =#{type}
+            <where>id = #{id}</where>
+        </set>
+    </update>
+
+
+    <!--用户信息-->
+    <select id="userinfo" resultType="Easybuy_info">
+        SELECT * FROM easybuy_info WHERE  name = #{xxxx}
+    </select>
+    <!--登录-->
+    <select id="isLogin" resultType="boolean">
+        SELECT COUNT(1) FROM easybuy_info
+        <where>NAME=#{name} AND pwd=#{pwd}</where>
+    </select>
+
+    <select id="getTotalusers" resultType="int">
+        select count(1) from Easybuy_user
+        <if test="null!=seleuname">
+            <where>userName LIKE concat('%',#{seleuname},'%')</where>
+        </if>
+    </select>
+
+</mapper>
